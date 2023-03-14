@@ -13,6 +13,7 @@ app.get('/hello', (req, res) => {
     res.send('Hello World!')
 });
 
-app.listen(process.env.PORT || 3000, () => {
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
     console.log(`webapp listening on port --> ${port}`)
 });
