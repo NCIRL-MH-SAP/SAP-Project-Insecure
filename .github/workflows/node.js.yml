@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "insecure_implementation", "secure_implementation" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "insecure_implementation", "secure_implementation" ]
 
 jobs:
   build:
