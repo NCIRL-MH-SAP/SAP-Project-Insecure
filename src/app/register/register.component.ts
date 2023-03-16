@@ -7,7 +7,7 @@ import { TextBoxComponent } from '@progress/kendo-angular-inputs';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent implements  AfterViewInit {
   public form: FormGroup;
   @ViewChild("passwordInput") passwordInput: TextBoxComponent;
   @ViewChild("confirmPasswordInput") confirmPasswordInput: TextBoxComponent;
@@ -33,7 +33,13 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       this.confirmPasswordInput.input.nativeElement.type = "password";
   }
 
-  ngOnInit(): void {
-    // this.InitializeControllers();
+
+  submitForm(){
+
+    if(this.form.valid){
+     var value = this.form.value;
+
+     console.log(value)
+    }
   }
 }
