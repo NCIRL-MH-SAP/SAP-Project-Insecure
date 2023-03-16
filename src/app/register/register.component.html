@@ -1,0 +1,26 @@
+<h1>Register User</h1>
+
+<form [formGroup]="form">
+    <kendo-label class="k-form" text="First Name">
+        <kendo-textbox [style.width.px]="200" formControlName="firstName" placeholder="Enter First Name"
+            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
+    </kendo-label>
+    <kendo-label class="k-form" text="Last Name">
+        <kendo-textbox [style.width.px]="200" formControlName="lastName" placeholder="Enter Last Name"
+            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
+    </kendo-label>
+    <kendo-label class="k-form" text="Email">
+        <kendo-textbox [style.width.px]="200" formControlName="email" placeholder="Enter Email"
+            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
+    </kendo-label>
+    <kendo-label class="k-form" text="Password">
+        <kendo-textbox [style.width.px]="200" #passwordInput="kendoTextBox" formControlName="password" placeholder="Enter Password"
+            showSuccessIcon="initial" showErrorIcon="initial">
+        </kendo-textbox>
+    </kendo-label>
+    <kendo-label class="k-form" text="Confirm Password">
+        <kendo-textbox #confirmPasswordInput="kendoTextBox" [style.width.px]="200" formControlName="confirmPassword"
+            placeholder="Confirm Password" howSuccessIcon="initial" showErrorIcon="initial">
+        </kendo-textbox>
+    </kendo-label>
+</form>

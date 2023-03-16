@@ -6,20 +6,39 @@ import { AdminComponent } from './admin/admin.component';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { RegisterComponent } from './register/register.component';
 
 
+import { IconsModule } from "@progress/kendo-angular-icons";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
+import { LabelModule } from "@progress/kendo-angular-label";
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
+import { HeaderComponent } from './header/header.component';
+import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminComponent
+    AdminComponent,
+    RegisterComponent,
+    HeaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     DateInputsModule,
     BrowserAnimationsModule,
-    GridModule
+    GridModule,
+    IconsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    LabelModule,
+    InputsModule,
+    DropDownsModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
