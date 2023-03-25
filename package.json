@@ -7,7 +7,7 @@
     "backend": "nodemon server.js",
     "frontend": "ng serve --open",
     "dev": "ng serve --open | nodemon server.js",
-    "build": "ng build",
+    "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
