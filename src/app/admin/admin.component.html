@@ -1,49 +1,25 @@
 <h1>Administrator</h1>
 
-<kendo-grid
-[kendoGridReactiveEditing]="createFormGroup"
-[kendoGridBinding]="users"
-[pageSize]="5"
-[pageable]="true"
-[sortable]="true"
-[navigable]="true"
->
-<ng-template kendoGridToolbarTemplate>
-  <button kendoGridAddCommand>Add new</button>
-</ng-template>
-<kendo-grid-column
-  field="FirstName"
-  title="First Name"
-></kendo-grid-column>
-<kendo-grid-column
-  field="LastName"
-  title="Last Name"
-></kendo-grid-column>
-<kendo-grid-column
-  field="Salary"
-  editor="numeric"
-  title="Salary"
-></kendo-grid-column>
-<kendo-grid-column
-  field="Bonus"
-  editor="numeric"
-  title="Bonus"
-></kendo-grid-column>
-<kendo-grid-column
-  field="Active"
-  editor="boolean"
-  title="Active"
-></kendo-grid-column>
-<kendo-grid-command-column title="command" [width]="220">
-  <ng-template kendoGridCellTemplate let-isNew="isNew">
-    <button kendoGridEditCommand [primary]="true">Edit</button>
-    <button kendoGridRemoveCommand>Remove</button>
-    <button kendoGridSaveCommand [disabled]="!formGroup || formGroup.invalid">
-      {{ isNew ? "Add" : "Update" }}
-    </button>
-    <button kendoGridCancelCommand>
-      {{ isNew ? "Discard changes" : "Cancel" }}
-    </button>
+<kendo-grid [kendoGridReactiveEditing]="createFormGroup" [kendoGridBinding]="users" [pageSize]="5" [pageable]="true"
+  [sortable]="true" [navigable]="true">
+  <ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand>Add new</button>
   </ng-template>
-</kendo-grid-command-column>
+  <kendo-grid-column field="firstName" title="First Name"></kendo-grid-column>
+  <kendo-grid-column field="lastName" title="Last Name"></kendo-grid-column>
+  <kendo-grid-column field="salary" editor="numeric" title="Salary"></kendo-grid-column>
+  <kendo-grid-column field="bonus" editor="numeric" title="Bonus"></kendo-grid-column>
+  <kendo-grid-column field="active" editor="boolean" title="Active"></kendo-grid-column>
+  <kendo-grid-command-column title="command" [width]="220">
+    <ng-template kendoGridCellTemplate let-isNew="isNew">
+      <button kendoGridEditCommand [primary]="true">Edit</button>
+      <button kendoGridRemoveCommand>Remove</button>
+      <button kendoGridSaveCommand [disabled]="!formGroup || formGroup.invalid">
+        {{ isNew ? "Add" : "Update" }}
+      </button>
+      <button kendoGridCancelCommand>
+        {{ isNew ? "Discard changes" : "Cancel" }}
+      </button>
+    </ng-template>
+  </kendo-grid-command-column>
 </kendo-grid>

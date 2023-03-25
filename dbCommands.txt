@@ -1,0 +1,5 @@
+ npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string,salary:double,bonus:double,password:string,active:boolean
+npx sequelize-cli db:create
+npx sequelize-cli seed:generate --name user-seed     
+npx sequelize-cli db:seed:all
+npx sequelize-cli db:seed:undo

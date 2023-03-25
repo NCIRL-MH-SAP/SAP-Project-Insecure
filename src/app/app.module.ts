@@ -1,24 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppComponent } from './app.component';
-import { AdminComponent } from './admin/admin.component';
-import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { AdminComponent } from './admin/admin.component';
+import { AppComponent } from './app.component';
 import { RegisterComponent } from './register/register.component';
 
 
-import { IconsModule } from "@progress/kendo-angular-icons";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IconsModule } from "@progress/kendo-angular-icons";
 
-import { LabelModule } from "@progress/kendo-angular-label";
-import { InputsModule } from "@progress/kendo-angular-inputs";
+import { MatInputModule } from '@angular/material/input';
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
-import { HeaderComponent } from './header/header.component';
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import { LabelModule } from "@progress/kendo-angular-label";
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
+import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
-import {MatInputModule} from '@angular/material/input';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BaseUrlInterceptor } from './BaseUrlInterceptor';
 
 @NgModule({
   declarations: [
@@ -29,6 +32,7 @@ import {MatInputModule} from '@angular/material/input';
     LoginComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     DateInputsModule,
     BrowserAnimationsModule,
@@ -42,7 +46,14 @@ import {MatInputModule} from '@angular/material/input';
     AppRoutingModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [
+    { provide: 'BASE_API_URL', useValue: environment.baseUrl },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: BaseUrlInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
