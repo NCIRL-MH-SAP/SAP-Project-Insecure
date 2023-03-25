@@ -18,6 +18,7 @@ import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './login/login.component';
+import {MatInputModule} from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { LoginComponent } from './login/login.component';
     LabelModule,
     InputsModule,
     DropDownsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

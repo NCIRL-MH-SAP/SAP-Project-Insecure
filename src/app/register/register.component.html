@@ -1,52 +1,43 @@
 <h1>Sign Up</h1>
 
-<form class="k-form" [formGroup]="form">
-    <kendo-formfield>
-        <kendo-label [for]="firstName" text="First Name"></kendo-label>
-        <kendo-textbox [style.width.px]="200" #firstName formControlName="firstName" placeholder="Enter First Name"
-            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-        <kendo-formerror>Error: First name is required</kendo-formerror>
-    </kendo-formfield>
-
-    <kendo-formfield>
-        <kendo-label [for]="lastName" text="First Name"></kendo-label>
-        <kendo-textbox [style.width.px]="200" #lastName formControlName="lastName" placeholder="Enter Last Name"
-            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-        <kendo-formerror>Error: Last name is required</kendo-formerror>
-    </kendo-formfield>
-
-    <kendo-formfield>
-        <kendo-label [for]="email" text="Email"></kendo-label>
-        <kendo-textbox [style.width.px]="200" #email formControlName="email" placeholder="Enter Email"
-            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-        <kendo-formerror>Error: Email is required</kendo-formerror>
-    </kendo-formfield>
-
-    <kendo-formfield>
-        <kendo-label [for]="email" text="Password"></kendo-label>
-        <kendo-textbox [style.width.px]="200" #passwordInput="kendoTextBox" formControlName="password"
-            placeholder="Enter Password" showSuccessIcon="initial" showErrorIcon="initial">
-        </kendo-textbox>
-        <kendo-formerror>Error: Paswword is required</kendo-formerror>
-    </kendo-formfield>
-
-    <kendo-formfield>
-        <kendo-label [for]="email" text="Confirm Password"></kendo-label>
-        <kendo-textbox #confirmPasswordInput="kendoTextBox" [style.width.px]="200" formControlName="confirmPassword"
-            placeholder="Confirm Password" howSuccessIcon="initial" showErrorIcon="initial">
-        </kendo-textbox>
-        <kendo-formerror>Error: Confirm Paswword is required</kendo-formerror>
-    </kendo-formfield>
-
+<form [formGroup]="form" class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>First Name</mat-label>
+        <input type="text" matInput formControlName="firstName" placeholder="Enter First Name">
+        <mat-error *ngIf="form.controls['firstName'].hasError('required')">
+            First Name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input type="text" matInput formControlName="lastName" placeholder="Enter Last Name">
+        <mat-error *ngIf="form.controls['lastName'].hasError('required')">
+            Last Name is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="text" matInput formControlName="email" placeholder="Enter Email">
+        <mat-error *ngIf="form.controls['email'].hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="Enter Password">
+        <mat-error *ngIf="form.controls['password'].hasError('required')">
+            Password is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword" placeholder="Enter Confirm Password">
+        <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
+            Confirm Password is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
     <div class="k-form-buttons">
-
         <button kendoButton type="submit" class="btn btn-primary btn-block mb-4" (click)="submitForm()"
-            [disabled]="!form.valid || form.pristine">Sign up</button>
-
-
-        <!-- <button kendoButton (click)="clearForm()">Clear</button> -->
+            [disabled]="!form.valid || form.pristine">Sign Up</button>
     </div>
-
-
-
 </form>

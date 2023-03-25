@@ -1,13 +1,23 @@
-<h1>Login</h1>
+<h1>Sign In</h1>
 
-<form [formGroup]="form">
-    <kendo-label class="k-form" text="Email">
-        <kendo-textbox [style.width.px]="200" formControlName="email" placeholder="Enter Email"
-            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-    </kendo-label>
-    <kendo-label class="k-form" text="Password">
-        <kendo-textbox [style.width.px]="200" #passwordInput="kendoTextBox" formControlName="password" placeholder="Enter Password"
-            showSuccessIcon="initial" showErrorIcon="initial">
-        </kendo-textbox>
-    </kendo-label>   
+<form [formGroup]="form" class="example-form">
+    <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="Enter Email">
+        <mat-error *ngIf="form.controls['email'].hasError('required')">
+            Email is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" placeholder="Enter Password">
+        <mat-error *ngIf="form.controls['password'].hasError('required')">
+            Password is <strong>required</strong>
+        </mat-error>
+    </mat-form-field>
+    <div class="k-form-buttons">
+        <button kendoButton type="submit" class="btn btn-primary btn-block mb-4" (click)="submitForm()"
+            [disabled]="!form.valid || form.pristine">Sign In</button>
+    </div>
 </form>

@@ -8,6 +8,7 @@ import { TextBoxComponent } from '@progress/kendo-angular-inputs';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements AfterViewInit {
+
   public form: FormGroup;
   @ViewChild("passwordInput") passwordInput: TextBoxComponent;
 
@@ -19,7 +20,7 @@ export class LoginComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.InitializeControllers();
+    this.InitializeControllers();    
   }
 
   private InitializeControllers() {
@@ -35,4 +36,15 @@ export class LoginComponent implements AfterViewInit {
 
     return false;
   }
+
+  submitForm(){
+
+    if(this.form.valid){
+     var value = this.form.value;
+
+     console.log(value)
+    }
+  }
+
+  // matcher = new MyErrorStateMatcher();
 }
