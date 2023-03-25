@@ -1,31 +1,52 @@
 <h1>Sign Up</h1>
 
-<form [formGroup]="form">
-    <div class="form-group">
-        <kendo-label class="k-form" text="First Name">
-            <kendo-textbox [style.width.px]="200" formControlName="firstName" placeholder="Enter First Name"
-                showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-        </kendo-label>
+<form class="k-form" [formGroup]="form">
+    <kendo-formfield>
+        <kendo-label [for]="firstName" text="First Name"></kendo-label>
+        <kendo-textbox [style.width.px]="200" #firstName formControlName="firstName" placeholder="Enter First Name"
+            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
+        <kendo-formerror>Error: First name is required</kendo-formerror>
+    </kendo-formfield>
 
-        <kendo-label class="k-form" text="Last Name">
-            <kendo-textbox [style.width.px]="200" formControlName="lastName" placeholder="Enter Last Name"
-                showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-        </kendo-label>
-        <kendo-label class="k-form" text="Email">
-            <kendo-textbox [style.width.px]="200" formControlName="email" placeholder="Enter Email"
-                showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
-        </kendo-label>
-        <kendo-label class="k-form" text="Password">
-            <kendo-textbox [style.width.px]="200" #passwordInput="kendoTextBox" formControlName="password"
-                placeholder="Enter Password" showSuccessIcon="initial" showErrorIcon="initial">
-            </kendo-textbox>
-        </kendo-label>
-        <kendo-label class="k-form" text="Confirm Password">
-            <kendo-textbox #confirmPasswordInput="kendoTextBox" [style.width.px]="200" formControlName="confirmPassword"
-                placeholder="Confirm Password" howSuccessIcon="initial" showErrorIcon="initial">
-            </kendo-textbox>
-        </kendo-label>
+    <kendo-formfield>
+        <kendo-label [for]="lastName" text="First Name"></kendo-label>
+        <kendo-textbox [style.width.px]="200" #lastName formControlName="lastName" placeholder="Enter Last Name"
+            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
+        <kendo-formerror>Error: Last name is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+        <kendo-label [for]="email" text="Email"></kendo-label>
+        <kendo-textbox [style.width.px]="200" #email formControlName="email" placeholder="Enter Email"
+            showSuccessIcon="initial" showErrorIcon="initial"></kendo-textbox>
+        <kendo-formerror>Error: Email is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+        <kendo-label [for]="email" text="Password"></kendo-label>
+        <kendo-textbox [style.width.px]="200" #passwordInput="kendoTextBox" formControlName="password"
+            placeholder="Enter Password" showSuccessIcon="initial" showErrorIcon="initial">
+        </kendo-textbox>
+        <kendo-formerror>Error: Paswword is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+        <kendo-label [for]="email" text="Confirm Password"></kendo-label>
+        <kendo-textbox #confirmPasswordInput="kendoTextBox" [style.width.px]="200" formControlName="confirmPassword"
+            placeholder="Confirm Password" howSuccessIcon="initial" showErrorIcon="initial">
+        </kendo-textbox>
+        <kendo-formerror>Error: Confirm Paswword is required</kendo-formerror>
+    </kendo-formfield>
+
+    <div class="k-form-buttons">
+
+        <button kendoButton type="submit" class="btn btn-primary btn-block mb-4" (click)="submitForm()"
+            [disabled]="!form.valid || form.pristine">Sign up</button>
+
+
+        <!-- <button kendoButton (click)="clearForm()">Clear</button> -->
     </div>
-    <button type="submit" class="btn btn-primary btn-block mb-4" (click)="submitForm()">Sign up</button>
+
+
 
 </form>
