@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CreateFormGroupArgs } from '@progress/kendo-angular-grid';
+import { environment } from 'src/environments/environment';
 import { User, users } from '../model/user';
 import { UserService } from '../user.service';
 
@@ -16,6 +17,8 @@ export class AdminComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder, private userService: UserService) {
     this.createFormGroup = this.createFormGroup.bind(this);
+    console.log(`environment.baseUrl: ${environment.baseUrl}`);
+    console.log(`environment.production: ${environment.production}`);
   }
   ngOnInit(): void {
 
