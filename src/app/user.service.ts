@@ -1,6 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { User } from './model/user';
 
 @Injectable({
@@ -12,5 +12,38 @@ export class UserService {
 
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>('api/users');
+  }
+
+  createUser(user: User): Observable<any> {
+    return this.httpClient.post('api/users', user);
+  }
+
+  updateUser(user: User): Observable<any> {
+    return this.httpClient.put('api/users', user);
+  }
+
+  deleteUser(user: User): Observable<any> {
+    return this.httpClient.delete(`api/users/${user.id}`);
+  }
+
+  signUp(user: User): Observable<any> {
+    return this.httpClient.post('api/auth/signup', user).pipe(
+      map((res) => {
+        return res || {};
+      }),
+      catchError(this.handleError));
+  }
+
+  handleError(error: HttpErrorResponse): Observable<any> {
+    let msg = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      msg = error.error.message;
+    } else {
+      // server-side error
+      // for testing: msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      msg = `Error Code: ${error.status}\nMessage: ${error.error.message}`;
+    }
+    return throwError(msg);
   }
 }

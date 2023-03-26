@@ -1,12 +1,15 @@
 <h1>Administrator</h1>
 
-<kendo-grid [kendoGridReactiveEditing]="createFormGroup" [kendoGridBinding]="users" [pageSize]="5" [pageable]="true"
-  [sortable]="true" [navigable]="true">
+<kendo-grid [data]="gridView" [pageSize]="gridState.take" [skip]="gridState.skip" [sort]="gridState.sort"
+  [pageable]="true" [sortable]="true" [navigable]="true" (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+  (save)="saveHandler($event)" (remove)="removeHandler($event)" (add)="addHandler($event)"
+  (dataStateChange)="onStateChange($event)">
   <ng-template kendoGridToolbarTemplate>
     <button kendoGridAddCommand>Add new</button>
   </ng-template>
   <kendo-grid-column field="firstName" title="First Name"></kendo-grid-column>
   <kendo-grid-column field="lastName" title="Last Name"></kendo-grid-column>
+  <kendo-grid-column field="email" title="Email"></kendo-grid-column>
   <kendo-grid-column field="salary" editor="numeric" title="Salary"></kendo-grid-column>
   <kendo-grid-column field="bonus" editor="numeric" title="Bonus"></kendo-grid-column>
   <kendo-grid-column field="active" editor="boolean" title="Active"></kendo-grid-column>
