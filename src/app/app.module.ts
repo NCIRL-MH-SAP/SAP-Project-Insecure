@@ -22,6 +22,10 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from './BaseUrlInterceptor';
+import { HomeComponent } from './home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatIconModule} from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button'
 
 @NgModule({
   declarations: [
@@ -29,7 +33,8 @@ import { BaseUrlInterceptor } from './BaseUrlInterceptor';
     AdminComponent,
     RegisterComponent,
     HeaderComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     HttpClientModule,
@@ -44,7 +49,10 @@ import { BaseUrlInterceptor } from './BaseUrlInterceptor';
     InputsModule,
     DropDownsModule,
     AppRoutingModule,
-    MatInputModule
+    MatInputModule,
+    NgbModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [
     { provide: 'BASE_API_URL', useValue: environment.baseUrl },

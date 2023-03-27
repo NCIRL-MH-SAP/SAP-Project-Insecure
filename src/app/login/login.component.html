@@ -1,9 +1,17 @@
 <h1>Sign In</h1>
-
-<form [formGroup]="form" class="example-form">
+<div id="alertMessagesArea">
+    <div id="errorResult">
+        <p>
+            <ngb-alert [dismissible]="true" *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''">
+                {{errorMessage}}
+            </ngb-alert>
+        </p>
+    </div>
+</div>
+<form [formGroup]="form" class="example-form" (ngSubmit)="submitForm()">
     <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>
-        <input type="email" matInput formControlName="email" placeholder="Enter Email">
+        <input type="email" matInput name="email" formControlName="email" placeholder="Enter Email">
         <mat-error *ngIf="form.controls['email'].hasError('required')">
             Email is <strong>required</strong>
         </mat-error>
@@ -17,7 +25,7 @@
         </mat-error>
     </mat-form-field>
     <div class="k-form-buttons">
-        <button kendoButton type="submit" class="btn btn-primary btn-block mb-4" (click)="submitForm()"
+        <button kendoButton type="submit" class="btn btn-primary btn-block mb-4"
             [disabled]="!form.valid || form.pristine">Sign In</button>
     </div>
 </form>

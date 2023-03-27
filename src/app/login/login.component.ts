@@ -1,50 +1,45 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { TextBoxComponent } from '@progress/kendo-angular-inputs';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements AfterViewInit {
+export class LoginComponent {
 
   public form: FormGroup;
-  @ViewChild("passwordInput") passwordInput: TextBoxComponent;
+  errorMessage: string;
+  subscription: Subscription;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.form = this.formBuilder.group({
       email: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required])
     });
   }
 
-  ngAfterViewInit(): void {
-    this.InitializeControllers();    
-  }
-
-  private InitializeControllers() {
-    if (this.passwordInput?.input?.nativeElement?.type)
-      this.passwordInput.input.nativeElement.type = "password";
-  }
-
-  public get showSuccess(): boolean {
-    if (this.form.controls) {
-      const formControl = this.form.controls['firstName'];
-      return formControl.value;
+  submitForm() {
+    if (this.form.invalid) {
+      return;
     }
 
-    return false;
+    var email = this.form.get('email')?.value;
+    var password = this.form.get('password')?.value;
+
+    this.subscription = this.authService.login(email, password).subscribe(
+      (res: any) => {
+        this.router.navigate(['/admin']);
+      },
+      error => {
+        this.errorMessage = error?.error?.message ?? "Invalid user credentials";
+      })
   }
 
-  submitForm(){
-
-    if(this.form.valid){
-     var value = this.form.value;
-
-     console.log(value)
-    }
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
   }
-
-  // matcher = new MyErrorStateMatcher();
 }

@@ -1,18 +1,21 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { TextBoxComponent } from '@progress/kendo-angular-inputs';
+import { Component } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements  AfterViewInit {
+export class RegisterComponent {
   public form: FormGroup;
-  @ViewChild("passwordInput") passwordInput: TextBoxComponent;
-  @ViewChild("confirmPasswordInput") confirmPasswordInput: TextBoxComponent;
+  subscription: Subscription;
+  errorMessage: string;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.form = this.formBuilder.group({
       firstName: new FormControl("", [Validators.required]),
       lastName: new FormControl("", [Validators.required]),
@@ -21,25 +24,35 @@ export class RegisterComponent implements  AfterViewInit {
       confirmPassword: new FormControl("", [Validators.required])
     });
   }
-  ngAfterViewInit(): void {
-    this.InitializeControllers();
-  }
 
-  private InitializeControllers() {
-    if (this.passwordInput?.input?.nativeElement?.type)
-      this.passwordInput.input.nativeElement.type = "password";
-
-    if (this.confirmPasswordInput?.input?.nativeElement?.type)
-      this.confirmPasswordInput.input.nativeElement.type = "password";
-  }
-
-
-  submitForm(){
-
-    if(this.form.valid){
-     var value = this.form.value;
-
-     console.log(value)
+  submitForm() {
+    if (this.form.invalid) {
+      return;
     }
+
+    var firstName = this.form.get('firstName')?.value;
+    var lastName = this.form.get('lastName')?.value;
+    var email = this.form.get('email')?.value;
+    var password = this.form.get('password')?.value;
+    var user: User = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      active: true
+    };
+
+    this.subscription = this.authService.register(user).subscribe(
+      (res: any) => {
+        this.router.navigate(['signIn']);
+      },
+      error => {        
+        this.errorMessage = error?.error?.message ?? "Unknown Error";
+      })
   }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe();
+  }
+
 }

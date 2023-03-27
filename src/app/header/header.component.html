@@ -1,18 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" style="padding-left: 30px;" [routerLink]="'.'">SAP (Insecure)</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<header>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light p-2">
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/signUp" routerLinkActive="active">Sign Up</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" routerLink="/signIn" routerLinkActive="active">Sign In</a>
-            </li>
-        </ul>
+
+            <a class="navbar-brand" [routerLink]="'.'">SAP (Insecure)</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" *ngIf="authService.isLoggedIn()">
+                        <a class="nav-link" routerLink="/admin">Admin</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav p-2">
+                    <button mat-stroked-button color="primary" style="margin-right: 10px;"
+                        *ngIf="!authService.isLoggedIn()" routerLink="/signUp">Sign Up</button>
+                    <button mat-stroked-button color="primary" style="margin-right: 10px;"
+                        *ngIf="!authService.isLoggedIn()" routerLink="/signIn">Sign In</button>
+                    <button mat-stroked-button color="primary" style="margin-right: 10px;"
+                        *ngIf="authService.isLoggedIn()" (click)="logout()">Sign
+                        Out</button>
+
+                    <span class="navbar-text" *ngIf="authService.isLoggedIn()">
+                        {{authService.getLoggedInUserEmail()}}
+                    </span>
+                </ul>
+            </div>
+
+        </nav>
     </div>
-</nav>
+</header>

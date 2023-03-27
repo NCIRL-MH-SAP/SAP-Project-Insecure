@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const path = require('path');
+const  verifySignUp = require("./middleware/verifySignUp");
 
 app.use(express.urlencoded({
     extended: true,
@@ -33,6 +34,7 @@ console.log(dbUrl)
 
 const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(dbUrl) // Example for postgres
+const Op = Sequelize.Op;
 app.get('/testdb', function (req, res) {
 
     sequelize.authenticate().then(() => {
@@ -136,6 +138,66 @@ app.delete("/api/users/:id", (req, res) => {
         res.status(500).send({ message: err.message });
     });
 })
+
+app.post("/api/auth/signin", (req, res) => {
+
+    if (!(req.body.email && req.body.password)) {
+        return res.status(400).send({ message: "Mandatory fields not provided" });
+    }
+
+    User.findOne({
+        where: {
+            email: { [Op.iLike]: req.body.email }
+        }
+    })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "Invalid user credential" });
+            }
+
+            var passwordIsValid = req.body.password === user.password;
+
+            if (!passwordIsValid) {
+                return res.status(401).send({
+                    accessToken: null,
+                    message: "Invalid user credential"
+                });
+            }
+            res.send({
+                id: user.id,
+                username: user.firstName + " " + user.lastName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+});
+
+app.post("/api/auth/signup", [verifySignUp.checkDuplicatedUserEmail], (req, res) => {
+
+    if (!(req.body.firstName && req.body.lastName && req.body.email && req.body.password)) {
+        return res.status(400).send({ message: "Mandatory fields not provided" });
+    }
+
+    User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        salary: 50000,
+        bonus: 10000,
+        active: true,
+        password: req.body.password
+    })
+        .then(user => {
+            res.send({ message: "User was registered successfully" });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+});
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
