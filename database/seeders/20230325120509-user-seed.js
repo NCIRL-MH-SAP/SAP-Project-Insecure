@@ -1,5 +1,5 @@
 'use strict';
-var bcrypt = require("bcryptjs");
+// var bcrypt = require("bcryptjs");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
