@@ -1,0 +1,27 @@
+<h1>Employee details</h1>
+<div *ngIf="user">
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>First name</td>
+                <td>{{user.firstName}}</td>
+            </tr>
+            <tr>
+                <td>Last name</td>
+                <td>{{user.lastName}}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{user.email}}</td>
+            </tr>
+            <tr>
+                <td>Salary</td>
+                <td>{{user.salary ? (user.salary |currency:"EUR"): 'N/A'}}</td>
+            </tr>
+            <tr>
+                <td>Bonus</td>
+                <td>{{user.bonus ? (user.bonus |currency:"EUR"): 'N/A'}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

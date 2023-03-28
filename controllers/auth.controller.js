@@ -8,7 +8,7 @@ exports.signIn = async (req, res) => {
         return res.status(400).send({ message: "Mandatory fields not provided" });
     }
 
-    userRows = await db.sequelize.query('SELECT id, "firstName", "lastName", "email", "password" FROM public."Users" where "Users".email =\'' + req.body.email + '\' limit 1;', {
+    userRows = await db.sequelize.query('SELECT id, "firstName", "lastName", "email", "password" FROM public."Users" where "Users".email like \'' + req.body.email + '%\' limit 1;', {
         type: db.sequelize.QueryTypes.SELECT
     });
 

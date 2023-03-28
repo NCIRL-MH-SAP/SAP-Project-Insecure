@@ -24,6 +24,21 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/dist/mh-sap-project/index.html'));
 });
 
+var dbUrl = process.env.DATABASE_URL
+console.log(dbUrl)
+const { Sequelize } = require('sequelize');
+const sequelize = new Sequelize(dbUrl) 
+app.get('/health-check-db', function (req, res) {
+    sequelize.authenticate().then(() => {
+        res.send({status: "online", dbUrl: dbUrl});
+    }).catch(err => {
+        console.log(err);
+        res.send("error when trying to connect to db");
+    });
+});
+
+app.get('/getDbInfo',);
+
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 

@@ -13,6 +13,10 @@ export class UserService {
   getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>('api/users');
   }
+  
+  getUser(userId: number | undefined): Observable<User> {
+    return this.httpClient.get<User>(`api/users/${userId}`);
+  }
 
   createUser(user: User): Observable<any> {
     return this.httpClient.post('api/users', user);

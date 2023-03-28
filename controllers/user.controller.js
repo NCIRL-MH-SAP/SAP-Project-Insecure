@@ -1,5 +1,35 @@
 const db = require('../database/models/index');
 const User = db.User;
+const { Sequelize } = require('sequelize');
+const Op = Sequelize.Op;
+
+var id = 0;
+
+exports.getById = (req, res) => {
+    if (!req.params.id) {
+        return res.status(400).send({ message: "'id' should be not empty" });
+    }
+
+    User.findOne({ where: { id: { [Op.eq]: req.params.id } } })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "User not found" });
+            }
+
+            return res.send({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                salary: user.salary,
+                bonus: user.bonus
+            });
+        })
+        .catch(err => {
+            console.log(err.message);
+            res.status(500).send({ message: err.message });
+        });
+};
 
 exports.get = (req, res) => {
     User.findAll({
@@ -12,6 +42,7 @@ exports.get = (req, res) => {
             res.status(500).send({ message: err.message });
         });
 };
+
 
 exports.post = (req, res) => {
     console.log(req.body)

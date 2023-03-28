@@ -25,7 +25,8 @@ import { BaseUrlInterceptor } from './BaseUrlInterceptor';
 import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatIconModule} from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button'
+import { MatButtonModule } from '@angular/material/button';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component'
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { MatButtonModule } from '@angular/material/button'
     RegisterComponent,
     HeaderComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    EmployeeDetailsComponent
   ],
   imports: [
     HttpClientModule,
