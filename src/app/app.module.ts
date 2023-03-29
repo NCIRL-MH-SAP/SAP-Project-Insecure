@@ -26,7 +26,9 @@ import { HomeComponent } from './home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatIconModule} from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { EmployeeDetailsComponent } from './employee-details/employee-details.component'
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AlertMessagesComponent } from './alert-message/alert-message.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
     HeaderComponent,
     LoginComponent,
     HomeComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    ChangePasswordComponent,
+    AlertMessagesComponent
   ],
   imports: [
     HttpClientModule,

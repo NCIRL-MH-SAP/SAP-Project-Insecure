@@ -31,23 +31,6 @@ export class UserService {
   }
 
   signUp(user: User): Observable<any> {
-    return this.httpClient.post('api/auth/signup', user).pipe(
-      map((res) => {
-        return res || {};
-      }),
-      catchError(this.handleError));
-  }
-
-  handleError(error: HttpErrorResponse): Observable<any> {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      msg = error.error.message;
-    } else {
-      // server-side error
-      // for testing: msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      msg = `Error Code: ${error.status}\nMessage: ${error.error.message}`;
-    }
-    return throwError(msg);
+    return this.httpClient.post('api/auth/signup', user);
   }
 }

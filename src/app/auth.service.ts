@@ -86,24 +86,8 @@ export class AuthService {
     console.log(`getLoggedInUserIsAdmin: ${localStorage.getItem('isAdmin')}`)
     return localStorage.getItem('isAdmin');
   }
-  // updatePassword(user: User, id: string): Observable<any> {
-  //   return this.httpClient.put(`api/user/update/password/${id}`, user).pipe(
-  //     map((res: Response) => {
-  //       return res;
-  //     }),
-  //     catchError((err) => { console.log(err); return this.handleError(err); }));
-  // }
-
-  handleError(error: HttpErrorResponse): Observable<any> {
-    let msg = '';
-    if (error.error instanceof ErrorEvent) {
-      // client-side error
-      msg = error.error.message;
-    } else {
-      // server-side error
-      // for testing: msg = `Error Code: ${error.status}\nMessage: ${error.message}`;
-      msg = `Error Code: ${error.status}\nMessage: ${error.error.message}`;
-    }
-    return throwError(msg);
+ 
+  updatePassword(user: any){
+    return this.httpClient.put(`api/auth/update/password/${user.id}`, user);
   }
 }

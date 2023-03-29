@@ -12,27 +12,27 @@ exports.signIn = async (req, res) => {
         type: db.sequelize.QueryTypes.SELECT
     });
 
-    if (userRows.length == 1) {       
+    if (userRows.length == 1) {
         const user = userRows[0];
         var passwordIsValid = req.body.password === user.password;
 
         if (!passwordIsValid) {
             return res.status(401).send({
                 accessToken: null,
-                message: "Invalid user credential"
+                message: "Invalid user credentials"
             });
         }
 
         return res.send({
-            id: user.id,         
+            id: user.id,
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
-            isAdmin: user.isAdmin??false
+            isAdmin: user.isAdmin ?? false
         });
     }
 
-    return res.status(404).send({ message: "Invalid user credential" });
+    return res.status(404).send({ message: "Invalid user credentials" });
 
     // User.findOne({
     //     where: {
@@ -41,7 +41,7 @@ exports.signIn = async (req, res) => {
     // })
     //     .then(user => {
     //         if (!user) {
-    //             return res.status(404).send({ message: "Invalid user credential" });
+    //             return res.status(404).send({ message: "Invalid user credentials" });
     //         }
 
     //         var passwordIsValid = req.body.password === user.password;
@@ -49,7 +49,7 @@ exports.signIn = async (req, res) => {
     //         if (!passwordIsValid) {
     //             return res.status(401).send({
     //                 accessToken: null,
-    //                 message: "Invalid user credential"
+    //                 message: "Invalid user credentials"
     //             });
     //         }
     //         res.send({
@@ -82,6 +82,48 @@ exports.signUp = (req, res) => {
     })
         .then(user => {
             res.send({ message: "User was registered successfully" });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+};
+
+exports.accountUpdatePassword = (req, res) => {
+    const userId = req.params.id;
+    if (!userId) {
+        return res.status(400).send({ message: "'Id' parameter should not be empty" });
+    }
+    if (!(req.body.password)) {
+        return res.status(400).send({ message: "'Password' parameter should not be empty" });
+    }
+
+    User.findOne({
+        where: {
+            id: userId
+        }
+    })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "User not found" });
+            }
+
+            User.update(
+                {
+                    // password: bcrypt.hashSync(req.body.password, 8)
+                    password: req.body.password
+                },
+                {
+                    where: {
+                        id: userId
+                    }
+                }
+            )
+                .then(() => {
+                    res.send({ message: "Password was updated successfully" });
+                })
+                .catch(err => {
+                    res.status(500).send({ message: err.message });
+                });
         })
         .catch(err => {
             res.status(500).send({ message: err.message });

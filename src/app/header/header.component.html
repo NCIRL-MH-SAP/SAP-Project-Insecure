@@ -15,9 +15,9 @@
                         <a class="nav-link" routerLink="/admin">Admin</a>
                     </li>
                     <li class="nav-item" *ngIf="authService.isLoggedIn()">
-                        <a class="nav-link" [routerLink]="['/employee', 1]"   >Employee</a>
+                        <a class="nav-link" [routerLink]="['/employee', 1]">Employee</a>
                     </li>
-                </ul>          
+                </ul>
                 <ul class="navbar-nav p-2">
                     <button mat-stroked-button color="primary" style="margin-right: 10px;"
                         *ngIf="!authService.isLoggedIn()" routerLink="/signUp">Sign Up</button>
@@ -28,7 +28,7 @@
                         Out</button>
 
                     <span class="navbar-text" *ngIf="authService.isLoggedIn()">
-                        {{authService.getLoggedInUserEmail()}}
+                        <a routerLink="/changePassword">{{authService.getLoggedInUserEmail()}}</a>
                     </span>
                 </ul>
             </div>
