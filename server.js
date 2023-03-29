@@ -14,7 +14,8 @@ console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 
 require('dotenv').config();
 
-if (process.env.NODE_ENV !== 'production') {
+//TODO: Remove this on secure version
+if (process.env.NODE_ENV !== 'production_WITH_TYPO') {
     app.use(cors());
 }
 
