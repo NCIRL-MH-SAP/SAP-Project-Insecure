@@ -10,21 +10,18 @@ import { UserService } from '../user.service';
 })
 export class EmployeeDetailsComponent implements OnInit {
   user: User | undefined;
-  constructor(private userService: UserService, private route: ActivatedRoute) {
-  }
 
-
-
+  constructor(private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
-      const id = Number(params['id'])
-      this.userService.getUser(id).subscribe(data => {
-        if (data) {
-          this.user = data;
-        }
+    const id = this.route.snapshot.params['id'];
+    if (!id || isNaN(id)) return;
 
-      })
+    const userId = Number(id);
+    this.userService.getUser(userId).subscribe(data => {
+      if (data) {
+        this.user = data;
+      }
     });
   }
 }
