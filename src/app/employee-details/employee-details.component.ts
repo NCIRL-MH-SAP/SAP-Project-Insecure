@@ -14,7 +14,10 @@ export class EmployeeDetailsComponent implements OnInit {
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
+    this.initializeUser(this.route.snapshot.params['id'])
+  }
+
+  initializeUser(id: any) {
     if (!id || isNaN(id)) return;
 
     const userId = Number(id);
