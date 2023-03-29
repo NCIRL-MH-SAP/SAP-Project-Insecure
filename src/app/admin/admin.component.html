@@ -12,7 +12,9 @@
   <kendo-grid-column field="email" title="Email"></kendo-grid-column>
   <kendo-grid-column field="salary" editor="numeric" title="Salary"></kendo-grid-column>
   <kendo-grid-column field="bonus" editor="numeric" title="Bonus"></kendo-grid-column>
+  <kendo-grid-column field="position" title="Position"></kendo-grid-column>
   <kendo-grid-column field="active" editor="boolean" title="Active"></kendo-grid-column>
+  <kendo-grid-column field="isAdmin" editor="boolean" title="IsAdmin"></kendo-grid-column>
   <kendo-grid-command-column title="command" [width]="220">
     <ng-template kendoGridCellTemplate let-isNew="isNew">
       <button kendoGridEditCommand [primary]="true">Edit</button>

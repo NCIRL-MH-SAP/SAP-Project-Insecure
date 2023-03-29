@@ -22,7 +22,8 @@ exports.getById = (req, res) => {
                 lastName: user.lastName,
                 email: user.email,
                 salary: user.salary,
-                bonus: user.bonus
+                bonus: user.bonus,
+                position: user.position
             });
         })
         .catch(err => {
@@ -57,6 +58,9 @@ exports.post = (req, res) => {
         email: req.body.email,
         salary: req.body.salary,
         bonus: req.body.bonus,
+        position: req.body.position,
+        isAdmin: req.body.isAdmin,
+        active: req.body.active
         // password: bcrypt.hashSync(req.body.password, 8)    
     })
         .then(user => {
@@ -85,7 +89,9 @@ exports.put = (req, res) => {
             email: req.body.email,
             salary: req.body.salary,
             bonus: req.body.bonus,
-            active: req.body.active,
+            position: req.body.position,
+            isAdmin: req.body.isAdmin,
+            active: req.body.active
         },
         {
             where: {

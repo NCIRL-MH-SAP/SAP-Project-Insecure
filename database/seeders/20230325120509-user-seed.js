@@ -21,9 +21,10 @@ module.exports = {
     // const passwordHashed = bcrypt.hashSync(password, 8);
 
     let users = [];
-    users.push({ firstName: 'Admin', lastName: 'Admin', email: 'admin@sap.com', password: adminPassword, active: true, createdAt: new Date(), updatedAt: new Date() })
-    users.push({ firstName: 'Magnus', lastName: 'Carlsen', email: 'mcarlsen@sap.com', salary: 300000, bonus: 30000, password: password, active: true, createdAt: new Date(), updatedAt: new Date() })
-    users.push({ firstName: 'Hikaru', lastName: 'Nakamura', email: 'hnakamura@sap.com', salary: 250000, bonus: 25000, password: password, active: true, createdAt: new Date(), updatedAt: new Date() })
+    users.push({ firstName: 'Admin', lastName: 'Admin', email: 'admin@sap.com', password: adminPassword, active: true, isAdmin: true, createdAt: new Date(), updatedAt: new Date() })
+    users.push({ firstName: 'Garry', lastName: 'Kasparov', email: 'gkasparov@sap.com', salary: 300000, bonus: 50000, position: "Software Architect",password: password, active: true, createdAt: new Date(), updatedAt: new Date() })
+    users.push({ firstName: 'Magnus', lastName: 'Carlsen', email: 'mcarlsen@sap.com', salary: 250000, bonus: 25000, position: "Software Architect",password: password, active: true, createdAt: new Date(), updatedAt: new Date() })
+    users.push({ firstName: 'Hikaru', lastName: 'Nakamura', email: 'hnakamura@sap.com', salary: 100000, bonus: 10000, position: "Software Engineer", password: password, active: true, createdAt: new Date(), updatedAt: new Date() })
 
     return queryInterface.bulkInsert('Users', users);
   },

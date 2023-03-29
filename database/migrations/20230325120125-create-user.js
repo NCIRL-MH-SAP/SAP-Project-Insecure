@@ -24,10 +24,16 @@ module.exports = {
       bonus: {
         type: Sequelize.DOUBLE
       },
+      position: {
+        type: Sequelize.STRING
+      },
       password: {
         type: Sequelize.STRING
       },
       active: {
+        type: Sequelize.BOOLEAN
+      },
+      isAdmin: {
         type: Sequelize.BOOLEAN
       },
       createdAt: {

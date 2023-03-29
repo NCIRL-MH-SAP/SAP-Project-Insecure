@@ -102,7 +102,9 @@ export class AdminComponent implements OnInit {
       email: [item.email, Validators.required],
       salary: item.salary,
       bonus: item.bonus,
-      active: item.active
+      active: item.active,
+      isAdmin: item.isAdmin,
+      position: item.position
     });
 
     return this.formGroup;

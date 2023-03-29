@@ -46,7 +46,7 @@ export class RegisterComponent {
       (res: any) => {
         this.router.navigate(['signIn']);
       },
-      error => {        
+      error => {
         this.errorMessage = error?.error?.message ?? "Unknown Error";
       })
   }

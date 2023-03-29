@@ -32,7 +32,22 @@ export class LoginComponent {
 
     this.subscription = this.authService.login(email, password).subscribe(
       (res: any) => {
-        this.router.navigate(['/admin']);
+        console.log(res)
+        if (res.isAdmin) {
+          console.log("isAdmin")
+          this.router.navigate(['/admin']);
+           return;
+        }
+
+        if (res.id) {
+          console.log("id")
+          this.router.navigate(['/employee', res.id]);
+           return;
+        }
+
+        console.log("home")
+        this.router.navigate(['/home']);
+
       },
       error => {
         this.errorMessage = error?.error?.message ?? "Invalid user credentials";

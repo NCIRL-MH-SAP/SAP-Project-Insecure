@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { User } from '../model/user';
 import { UserService } from '../user.service';
 
@@ -14,14 +14,11 @@ export class EmployeeDetailsComponent implements OnInit {
   }
 
 
+
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const id = params['id'];
-
-      console.log(id)
-      if (!id)
-        return;
-
+    this.route.params.subscribe((params) => {
+      const id = Number(params['id'])
       this.userService.getUser(id).subscribe(data => {
         if (data) {
           this.user = data;
@@ -29,6 +26,5 @@ export class EmployeeDetailsComponent implements OnInit {
 
       })
     });
-
   }
 }

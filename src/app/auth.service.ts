@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { User } from './model/user';
 
 @Injectable({
@@ -31,15 +31,15 @@ export class AuthService {
   login(email: string, password: string) {
     return this.httpClient.post<any>('api/auth/signin', { email, password })
       .pipe(map(res => {
-        // localStorage.setItem('access_token', res.accessToken);
         localStorage.setItem('user_id', res.id);
-        localStorage.setItem('email', email);
-
+        localStorage.setItem('email', res.email);
+        localStorage.setItem('isAdmin', res.isAdmin);
         var user = new User();
         user.id = res.id;
         user.firstName = res.firstName;
         user.lastName = res.lastName;
         user.email = res.email;
+        user.isAdmin = res.isAdmin;
 
         this.setLoggedInUserChange(user);
 
@@ -51,16 +51,23 @@ export class AuthService {
     // localStorage.removeItem('access_token');
     localStorage.removeItem('user_id');
     localStorage.removeItem('email');
+    localStorage.removeItem('isAdmin');
 
     this.setLoggedInUserChange(undefined);
     this.router.navigate(['/home']);
   }
 
-  public isLoggedIn(): boolean { 
+  public isLoggedIn(): boolean {
     if (!this.getLoggedInUserId()) return false;
     if (!this.getLoggedInUserEmail()) return false;
 
     return true;
+  }
+
+  public isLoggedInAdmin(): boolean {
+    var isAdmin = (/true/i).test(localStorage.getItem("isAdmin") ?? "");
+
+    return this.isLoggedIn() && isAdmin
   }
 
   isLoggedOut(): boolean {
@@ -75,6 +82,10 @@ export class AuthService {
     return localStorage.getItem('email');
   }
 
+  getLoggedInUserIsAdmin() {
+    console.log(`getLoggedInUserIsAdmin: ${localStorage.getItem('isAdmin')}`)
+    return localStorage.getItem('isAdmin');
+  }
   // updatePassword(user: User, id: string): Observable<any> {
   //   return this.httpClient.put(`api/user/update/password/${id}`, user).pipe(
   //     map((res: Response) => {

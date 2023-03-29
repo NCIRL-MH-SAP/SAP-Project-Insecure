@@ -8,14 +8,12 @@ import { HomeComponent } from './home/home.component';
 import { AuthService } from './auth.service';
 import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
 
-
-
 const appRoutes: Routes = [
   // Home
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [() => inject(AuthService).isLoggedIn()] },
-  { path: 'employee', component: EmployeeDetailsComponent, canActivate: [() => inject(AuthService).isLoggedIn()] },
+  { path: 'admin', component: AdminComponent, canActivate: [() => inject(AuthService).isLoggedInAdmin()] },
+  { path: 'employee/:id', component: EmployeeDetailsComponent, canActivate: [() => inject(AuthService).isLoggedIn()] },
   { path: 'signUp', component: RegisterComponent },
   { path: 'signIn', component: LoginComponent },
 ];

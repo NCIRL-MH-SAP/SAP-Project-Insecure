@@ -3,8 +3,10 @@ export class User {
     public firstName = '';
     public lastName = '';
     public email = '';
-    public active?= false;
+    public active? = false;
+    public isAdmin? = false;
     public bonus?: number;
     public salary?: number;
     public password: "";
+    public position? = '';
 }
