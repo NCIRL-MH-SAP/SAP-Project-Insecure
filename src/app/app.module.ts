@@ -12,23 +12,24 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IconsModule } from "@progress/kendo-angular-icons";
 
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { environment } from 'src/environments/environment';
-import { AppRoutingModule } from './app-routing.module';
-import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { BaseUrlInterceptor } from './BaseUrlInterceptor';
-import { HomeComponent } from './home/home.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {MatIconModule} from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AlertMessagesComponent } from './alert-message/alert-message.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BaseUrlInterceptor } from './BaseUrlInterceptor';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { EmployeeDetailsComponent } from './employee-details/employee-details.component';
+import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { AlertMessagesComponent } from './alert-message/alert-message.component'
       useClass: BaseUrlInterceptor,
       multi: true,
     },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })
