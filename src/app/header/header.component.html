@@ -15,7 +15,7 @@
                         <a class="nav-link" routerLink="/admin">Admin</a>
                     </li>
                     <li class="nav-item" *ngIf="authService.isLoggedIn()">
-                        <a class="nav-link" [routerLink]="['/employee', 1]">Employee</a>
+                        <a class="nav-link" [routerLink]="['/employee', authService.getLoggedInUserId()]">Employee</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav p-2">
