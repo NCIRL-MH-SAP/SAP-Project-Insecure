@@ -34,20 +34,16 @@ export class LoginComponent {
       (res: any) => {
         console.log(res)
         if (res.isAdmin) {
-          console.log("isAdmin")
           this.router.navigate(['/admin']);
-           return;
+          return;
         }
 
         if (res.id) {
-          console.log("id")
-          this.router.navigate(['/employee', res.id]);
-           return;
+          this.router.navigate(['/employee'], { queryParams: { id: res.id } });
+          return;
         }
 
-        console.log("home")
         this.router.navigate(['/home']);
-
       },
       error => {
         this.errorMessage = error?.error?.message ?? "Invalid user credentials";

@@ -14,7 +14,7 @@ const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
   { path: 'admin', component: AdminComponent, canActivate: [() => inject(AuthService).isLoggedInAdmin()] },
-  { path: 'employee/:id', component: EmployeeDetailsComponent, canActivate: [() => inject(AuthService).isLoggedIn()] },
+  { path: 'employee', component: EmployeeDetailsComponent, canActivate: [() => inject(AuthService).isLoggedIn()] },
   { path: 'changePassword', component: ChangePasswordComponent, canActivate: [() => inject(AuthService).isLoggedIn()] },  
   { path: 'signUp', component: RegisterComponent },
   { path: 'signIn', component: LoginComponent },

@@ -8,20 +8,12 @@ exports.signIn = async (req, res) => {
         return res.status(400).send({ message: "Mandatory fields not provided" });
     }
 
-    userRows = await db.sequelize.query('SELECT id, "firstName", "lastName", "email", "password", "isAdmin" FROM public."Users" where "Users".email like \'' + req.body.email + '%\' limit 1;', {
+    userRows = await db.sequelize.query('SELECT id, "firstName", "lastName", "email", "password", "isAdmin" FROM public."Users" where "Users".email like \'' + req.body.email + '%\' and "Users".password = \'' +req.body.password +   '\'  limit 1;', {
         type: db.sequelize.QueryTypes.SELECT
     });
 
     if (userRows.length == 1) {
-        const user = userRows[0];
-        var passwordIsValid = req.body.password === user.password;
-
-        if (!passwordIsValid) {
-            return res.status(401).send({
-                accessToken: null,
-                message: "Invalid user credentials"
-            });
-        }
+        const user = userRows[0];    
 
         return res.send({
             id: user.id,

@@ -12,7 +12,6 @@ import { RegisterComponent } from './register/register.component';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { IconsModule } from "@progress/kendo-angular-icons";
 
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -67,8 +66,7 @@ import { LoginComponent } from './login/login.component';
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,
       multi: true,
-    },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    }
   ],
   bootstrap: [AppComponent]
 })
