@@ -39,11 +39,12 @@ export class LoginComponent {
         }
 
         if (res.id) {
-          this.router.navigate(['/employee'], { queryParams: { id: res.id } });
+          this.router.navigate(['/employee', res.id]);
           return;
         }
 
         this.router.navigate(['/home']);
+
       },
       error => {
         this.errorMessage = error?.error?.message ?? "Invalid user credentials";

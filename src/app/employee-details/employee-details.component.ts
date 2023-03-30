@@ -13,8 +13,8 @@ export class EmployeeDetailsComponent implements OnInit {
 
   constructor(private userService: UserService, private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
-    this.initializeUser(this.route.snapshot.queryParamMap.get('id'));
+  ngOnInit(): void {   
+    this.initializeUser(this.route.snapshot.params['id'])
   }
 
   initializeUser(id: any) {
