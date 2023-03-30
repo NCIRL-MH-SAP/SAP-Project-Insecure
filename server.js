@@ -19,9 +19,12 @@ if (process.env.NODE_ENV !== 'production_WITH_TYPO') {
     app.use(cors());
 }
 
+require('./routes/auth.routes')(app);
+require('./routes/user.routes')(app);
+
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/mh-sap-project'));
-app.get('/', function (req, res) {
+app.get('*', function (req, res) {
     res.sendFile(path.join(__dirname + '/dist/mh-sap-project/index.html'));
 });
 
@@ -38,10 +41,7 @@ app.get('/health-check-db', function (req, res) {
     });
 });
 
-app.get('/getDbInfo',);
 
-require('./routes/auth.routes')(app);
-require('./routes/user.routes')(app);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

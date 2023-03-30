@@ -68,7 +68,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
       useClass: BaseUrlInterceptor,
       multi: true,
     },
-    { provide: LocationStrategy, useClass: HashLocationStrategy }
+    // { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })
