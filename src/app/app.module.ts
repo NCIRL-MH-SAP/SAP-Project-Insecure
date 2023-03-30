@@ -29,6 +29,7 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { LoginComponent } from './login/login.component';
       provide: HTTP_INTERCEPTORS,
       useClass: BaseUrlInterceptor,
       multi: true,
-    }
+    },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
   ],
   bootstrap: [AppComponent]
 })

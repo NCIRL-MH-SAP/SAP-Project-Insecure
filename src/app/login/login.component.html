@@ -1,13 +1,6 @@
 <h1>Sign In</h1>
-<div id="alertMessagesArea">
-    <div id="errorResult">
-        <p>
-            <ngb-alert [dismissible]="true" *ngIf="errorMessage" type="danger" (closed)="errorMessage = ''">
-                {{errorMessage}}
-            </ngb-alert>
-        </p>
-    </div>
-</div>
+<app-alert-message [errorMessage]="errorMessage" (errorMessageChange)="errorMessage=undefined">
+</app-alert-message>
 <form [formGroup]="form" class="example-form" (ngSubmit)="submitForm()">
     <mat-form-field class="example-full-width">
         <mat-label>Email</mat-label>

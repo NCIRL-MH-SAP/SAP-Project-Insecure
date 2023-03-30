@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,9 +11,7 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
 
   public form: FormGroup;
-  errorMessage: string;
-  subscription: Subscription;
-
+  errorMessage?: string;
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.form = this.formBuilder.group({
       email: new FormControl("", [Validators.required]),
@@ -30,7 +27,7 @@ export class LoginComponent {
     var email = this.form.get('email')?.value;
     var password = this.form.get('password')?.value;
 
-    this.subscription = this.authService.login(email, password).subscribe(
+    this.authService.login(email, password).subscribe(
       (res: any) => {
         console.log(res)
         if (res.isAdmin) {
@@ -49,9 +46,5 @@ export class LoginComponent {
       error => {
         this.errorMessage = error?.error?.message ?? "Invalid user credentials";
       })
-  }
-
-  ngOnDestroy(): void {
-    this.subscription?.unsubscribe();
   }
 }

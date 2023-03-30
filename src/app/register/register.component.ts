@@ -13,7 +13,7 @@ import { User } from '../model/user';
 export class RegisterComponent {
   public form: FormGroup;
   subscription: Subscription;
-  errorMessage: string;
+  errorMessage?: string;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.form = this.formBuilder.group({
