@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: 'https://mh-sap-project-secure.herokuapp.com/'
+    baseUrl: 'https://mh-sap-project-secure.herokuapp.com'
 };
