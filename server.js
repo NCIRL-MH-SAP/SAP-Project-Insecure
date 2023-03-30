@@ -22,6 +22,15 @@ if (process.env.NODE_ENV !== 'production_WITH_TYPO') {
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);
 
+app.get('/health-check-db', function (req, res) {
+    sequelize.authenticate().then(() => {
+        res.send({status: "online", dbUrl: dbUrl});
+    }).catch(err => {
+        console.log(err);
+        res.send("error when trying to connect to db");
+    });
+});
+
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/mh-sap-project'));
 app.get('*', function (req, res) {
@@ -32,15 +41,6 @@ var dbUrl = process.env.DATABASE_URL
 console.log(dbUrl)
 const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize(dbUrl) 
-app.get('/health-check-db', function (req, res) {
-    sequelize.authenticate().then(() => {
-        res.send({status: "online", dbUrl: dbUrl});
-    }).catch(err => {
-        console.log(err);
-        res.send("error when trying to connect to db");
-    });
-});
-
 
 
 const port = process.env.PORT || 3000;
