@@ -1,4 +1,7 @@
 const db = require("../database/models");
+const config = require("../config/auth.config");
+var jwt = require("jsonwebtoken");
+var bcrypt = require("bcryptjs");
 const User = db.User;
 const { Sequelize } = require('sequelize');
 const Op = Sequelize.Op;
@@ -8,53 +11,46 @@ exports.signIn = async (req, res) => {
         return res.status(400).send({ message: "Mandatory fields not provided" });
     }
 
-    userRows = await db.sequelize.query('SELECT id, "firstName", "lastName", "email", "password", "isAdmin" FROM public."Users" where "Users".email like \'' + req.body.email + '%\' and "Users".password = \'' +req.body.password +   '\'  limit 1;', {
-        type: db.sequelize.QueryTypes.SELECT
-    });
+    User.findOne({
+        where: {
+            email: { [Op.iLike]: req.body.email }
+        }
+    })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "Invalid user credentials" });
+            }
 
-    if (userRows.length == 1) {
-        const user = userRows[0];    
+            var passwordIsValid = bcrypt.compareSync(
+                req.body.password,
+                user.password
+            );
 
-        return res.send({
-            id: user.id,
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-            isAdmin: user.isAdmin ?? false
+            if (!passwordIsValid) {
+                return res.status(401).send({
+                    accessToken: null,
+                    message: "Invalid user credentials"
+                });
+            }
+
+            var token = jwt.sign({ id: user.id, email: user.email, isAdmin: user.isAdmin ?? false },
+                config.secret,
+                {
+                    expiresIn: 86400 // 24 hours
+                });
+
+            res.send({
+                id: user.id,
+                username: user.firstName + " " + user.lastName,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                accessToken: token
+            });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
         });
-    }
-
-    return res.status(404).send({ message: "Invalid user credentials" });
-
-    // User.findOne({
-    //     where: {
-    //         email: { [Op.iLike]: req.body.email }
-    //     }
-    // })
-    //     .then(user => {
-    //         if (!user) {
-    //             return res.status(404).send({ message: "Invalid user credentials" });
-    //         }
-
-    //         var passwordIsValid = req.body.password === user.password;
-
-    //         if (!passwordIsValid) {
-    //             return res.status(401).send({
-    //                 accessToken: null,
-    //                 message: "Invalid user credentials"
-    //             });
-    //         }
-    //         res.send({
-    //             id: user.id,
-    //             username: user.firstName + " " + user.lastName,
-    //             firstName: user.firstName,
-    //             lastName: user.lastName,
-    //             email: user.email
-    //         });
-    //     })
-    //     .catch(err => {
-    //         res.status(500).send({ message: err.message });
-    //     });
 };
 
 exports.signUp = (req, res) => {
@@ -70,7 +66,7 @@ exports.signUp = (req, res) => {
         salary: 50000,
         bonus: 10000,
         active: true,
-        password: req.body.password
+        password: bcrypt.hashSync(req.body.password, 8)
     })
         .then(user => {
             res.send({ message: "User was registered successfully" });

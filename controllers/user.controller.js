@@ -37,7 +37,17 @@ exports.get = (req, res) => {
         order: [['createdAt', 'ASC']]
     })
         .then((r) => {
-            res.send(r);
+            const mapped = r.map(u =>   ({
+                id: u.id,
+                firstName: u.firstName,
+                lastName: u.lastName,
+                email: u.email,
+                salary: u.salary,
+                bonus: u.bonus,
+                position: u.position
+            }));
+
+            res.send(mapped);
         })
         .catch(err => {
             res.status(500).send({ message: err.message });

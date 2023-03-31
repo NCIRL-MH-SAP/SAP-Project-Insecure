@@ -16,6 +16,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { JwtModule } from '@auth0/angular-jwt';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { InputsModule } from "@progress/kendo-angular-inputs";
@@ -29,7 +30,10 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+
+export function tokenGetter() {
+  return localStorage.getItem("access_token");
+}
 
 @NgModule({
   declarations: [
@@ -59,7 +63,14 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     MatInputModule,
     NgbModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ["localhost:3000", "mh-sap-project-secure.herokuapp.com"],
+        disallowedRoutes: ["localhost:3000/api/auth/signin"]
+      }
+    }),
   ],
   providers: [
     { provide: 'BASE_API_URL', useValue: environment.baseUrl },

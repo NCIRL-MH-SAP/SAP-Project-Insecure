@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { AuthService } from '../auth.service';
 import { User } from '../model/user';
 import { UserService } from '../user.service';
 
@@ -11,10 +12,10 @@ import { UserService } from '../user.service';
 export class EmployeeDetailsComponent implements OnInit {
   user: User | undefined;
 
-  constructor(private userService: UserService, private route: ActivatedRoute) { }
+  constructor(private userService: UserService, private authService: AuthService) { }
 
-  ngOnInit(): void {   
-    this.initializeUser(this.route.snapshot.params['id'])
+  ngOnInit(): void {
+    this.initializeUser(this.authService.getLoggedInUserId())
   }
 
   initializeUser(id: any) {

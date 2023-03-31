@@ -13,9 +13,14 @@ app.use(express.json({ limit: '1mb' }));
 
 console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 
-//TODO: Remove this on secure version
-if (process.env.NODE_ENV !== 'production_WITH_TYPO') {
+if (process.env.NODE_ENV !== 'production') {
     app.use(cors());
+}
+else if (!process.env.DISABLE_REDIRECT_TO_HTTPS) {
+    var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+    const ignoreHosts = [];
+    const ignoreRoutes = [];
+    app.use(redirectToHTTPS(ignoreHosts, ignoreRoutes));
 }
 
 require('./routes/auth.routes')(app);

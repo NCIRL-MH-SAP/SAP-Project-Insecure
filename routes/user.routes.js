@@ -1,9 +1,10 @@
 const controller = require("../controllers/user.controller");
+const  authJwt  = require("../middleware/authJwt");
 
 module.exports = function (app) {
-    app.get('/api/users/:id', controller.getById)
-    app.get('/api/users', controller.get)
-    app.post("/api/users", controller.post)
-    app.put("/api/users", controller.put)
-    app.delete("/api/users/:id", controller.delete)
+    app.get('/api/users/:id', [authJwt.verifyToken], controller.getById)
+    app.get('/api/users', [authJwt.verifyToken], controller.get)
+    app.post("/api/users", [authJwt.verifyToken], controller.post)
+    app.put("/api/users", [authJwt.verifyToken], controller.put)
+    app.delete("/api/users/:id", [authJwt.verifyToken], controller.delete)
 };

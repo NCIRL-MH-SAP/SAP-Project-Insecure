@@ -30,13 +30,13 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe(
       (res: any) => {
         console.log(res)
-        if (res.isAdmin) {
+        if (this.authService.isLoggedInAdmin()) {
           this.router.navigate(['/admin']);
           return;
         }
 
-        if (res.id) {
-          this.router.navigate(['/employee', res.id]);
+        if (this.authService.getLoggedInUserId()) {
+          this.router.navigate(['/employee']);
           return;
         }
 

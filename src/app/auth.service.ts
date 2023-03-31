@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from './model/user';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class AuthService {
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, private router: Router, private jwtHelper: JwtHelperService) { }
 
   loggedInUser$ = new BehaviorSubject<User | undefined>(undefined);
 
@@ -31,9 +32,8 @@ export class AuthService {
   login(email: string, password: string) {
     return this.httpClient.post<any>('api/auth/signin', { email, password })
       .pipe(map(res => {
-        localStorage.setItem('user_id', res.id);
-        localStorage.setItem('email', res.email);
-        localStorage.setItem('isAdmin', res.isAdmin);
+        localStorage.setItem('access_token', res.accessToken);
+
         var user = new User();
         user.id = res.id;
         user.firstName = res.firstName;
@@ -48,26 +48,26 @@ export class AuthService {
   }
 
   logout(): void {
-    // localStorage.removeItem('access_token');
-    localStorage.removeItem('user_id');
-    localStorage.removeItem('email');
-    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('access_token');
 
     this.setLoggedInUserChange(undefined);
     this.router.navigate(['/home']);
   }
 
-  public isLoggedIn(): boolean {
-    if (!this.getLoggedInUserId()) return false;
-    if (!this.getLoggedInUserEmail()) return false;
+  getAccessToken(): string {
+    return localStorage.getItem('access_token') ?? "";
+  }
 
-    return true;
+  public isLoggedIn(): boolean {
+    const token = this.getAccessToken();
+
+    return !this.jwtHelper.isTokenExpired(token);
   }
 
   public isLoggedInAdmin(): boolean {
-    var isAdmin = (/true/i).test(localStorage.getItem("isAdmin") ?? "");
+    if (!this.isLoggedIn()) return false;
 
-    return this.isLoggedIn() && isAdmin
+    return this.getDecodeToken().isAdmin ?? false
   }
 
   isLoggedOut(): boolean {
@@ -75,19 +75,20 @@ export class AuthService {
   }
 
   getLoggedInUserId() {
-    return localStorage.getItem('user_id');
+    return this.getDecodeToken().id ?? 0;
   }
 
   getLoggedInUserEmail() {
-    return localStorage.getItem('email');
+    return this.getDecodeToken().email ?? "";
   }
 
-  getLoggedInUserIsAdmin() {
-    console.log(`getLoggedInUserIsAdmin: ${localStorage.getItem('isAdmin')}`)
-    return localStorage.getItem('isAdmin');
-  }
- 
-  updatePassword(user: any){
+  updatePassword(user: any) {
     return this.httpClient.put(`api/auth/update/password/${user.id}`, user);
+  }
+
+  getDecodeToken() {
+    var accessToken = this.getAccessToken();
+    const helper = new JwtHelperService();
+    return helper.decodeToken(accessToken);
   }
 }
