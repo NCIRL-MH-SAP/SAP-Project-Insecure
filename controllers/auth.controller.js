@@ -97,8 +97,7 @@ exports.accountUpdatePassword = (req, res) => {
 
             User.update(
                 {
-                    // password: bcrypt.hashSync(req.body.password, 8)
-                    password: req.body.password
+                    password: bcrypt.hashSync(req.body.password, 8)
                 },
                 {
                     where: {
