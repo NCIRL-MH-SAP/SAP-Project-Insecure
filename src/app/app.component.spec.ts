@@ -1,11 +1,18 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AppComponent } from './app.component';
+import { AuthService } from './auth.service';
+import { HeaderComponent } from './header/header.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule ],
+      providers: [AuthService, JwtHelperService, { provide: JWT_OPTIONS, useValue: JWT_OPTIONS }],      
       declarations: [
-        AppComponent
+        AppComponent, HeaderComponent
       ],
     }).compileComponents();
   });
@@ -26,6 +33,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('mh-sap-project app is running!');
+    
+    expect(compiled.getElementsByTagName("title")[0]?.innerText).toContain('mh-sap-project');
   });
 });

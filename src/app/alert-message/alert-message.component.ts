@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
 
 @Component({
   selector: 'app-alert-message',
@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@
   styleUrls: ['./alert-message.component.css']
 })
 
-export class AlertMessagesComponent implements OnInit {
+export class AlertMessageComponent implements OnInit {
   @Input()
   errorMessage: string | undefined;
   @Input()

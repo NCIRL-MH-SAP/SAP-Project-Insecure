@@ -54,8 +54,8 @@ export class AuthService {
     this.router.navigate(['/home']);
   }
 
-  getAccessToken(): string {
-    return localStorage.getItem('access_token') ?? "";
+  getAccessToken() {
+    return localStorage.getItem('access_token');
   }
 
   public isLoggedIn(): boolean {
@@ -67,7 +67,7 @@ export class AuthService {
   public isLoggedInAdmin(): boolean {
     if (!this.isLoggedIn()) return false;
 
-    return this.getDecodeToken().isAdmin ?? false
+    return this.getDecodeToken()?.isAdmin ?? false
   }
 
   isLoggedOut(): boolean {
@@ -75,11 +75,11 @@ export class AuthService {
   }
 
   getLoggedInUserId() {
-    return this.getDecodeToken().id ?? 0;
+    return this.getDecodeToken()?.id ?? 0;
   }
 
   getLoggedInUserEmail() {
-    return this.getDecodeToken().email ?? "";
+    return this.getDecodeToken()?.email ?? "";
   }
 
   updatePassword(user: any) {
@@ -88,6 +88,8 @@ export class AuthService {
 
   getDecodeToken() {
     var accessToken = this.getAccessToken();
+    if(!accessToken) return null;
+
     const helper = new JwtHelperService();
     return helper.decodeToken(accessToken);
   }

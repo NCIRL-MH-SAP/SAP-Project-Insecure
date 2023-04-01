@@ -22,7 +22,6 @@ import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { environment } from 'src/environments/environment';
-import { AlertMessagesComponent } from './alert-message/alert-message.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BaseUrlInterceptor } from './BaseUrlInterceptor';
 import { ChangePasswordComponent } from './change-password/change-password.component';
@@ -30,6 +29,7 @@ import { EmployeeDetailsComponent } from './employee-details/employee-details.co
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { AlertMessageComponent } from './alert-message/alert-message.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -45,7 +45,7 @@ export function tokenGetter() {
     HomeComponent,
     EmployeeDetailsComponent,
     ChangePasswordComponent,
-    AlertMessagesComponent
+    AlertMessageComponent
   ],
   imports: [
     HttpClientModule,
