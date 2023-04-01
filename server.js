@@ -20,6 +20,7 @@ else if (!process.env.DISABLE_HTTPS) {
     const helmet = require("helmet")
     app.use(
         helmet.contentSecurityPolicy({
+            useDefaults: true,
             directives: {
                 "script-src-attr": ["'unsafe-inline'"]
             },
