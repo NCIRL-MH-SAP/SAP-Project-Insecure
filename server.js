@@ -18,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 else if (!process.env.DISABLE_HTTPS) {
     const helmet = require("helmet")
+    app.use(helmet())
     app.use(
         helmet.contentSecurityPolicy({
             useDefaults: true,
