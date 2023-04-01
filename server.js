@@ -24,6 +24,9 @@ else if (!process.env.DISABLE_HTTPS) {
     const referrerPolicy = require('referrer-policy')
     app.use(referrerPolicy({ policy: 'same-origin' }))
 
+    var xFrameOptions = require('x-frame-options')
+    app.use(xFrameOptions())
+    
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
     const ignoreRoutes = [];
