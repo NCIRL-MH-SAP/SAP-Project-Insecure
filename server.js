@@ -26,6 +26,8 @@ else if (!process.env.DISABLE_HTTPS) {
 
     var xFrameOptions = require('x-frame-options')
     app.use(xFrameOptions())
+
+    app.disable('x-powered-by');
     
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
