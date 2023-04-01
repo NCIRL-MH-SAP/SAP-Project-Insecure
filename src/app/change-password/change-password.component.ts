@@ -18,7 +18,10 @@ export class ChangePasswordComponent {
     this.form = this.formBuilder.group({
       password: new FormControl("", [Validators.required]),
       confirmPassword: new FormControl("", [Validators.required])
-    });
+    },
+      {
+        validator: this.ConfirmedValidator('password', 'confirmPassword'),
+      });
   }
 
   submitForm() {
@@ -46,4 +49,18 @@ export class ChangePasswordComponent {
     this.subscription?.unsubscribe();
   }
 
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors['confirmedValidator']) { return; }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
+  }
 }

@@ -22,7 +22,10 @@ export class RegisterComponent {
       email: new FormControl("", [Validators.required]),
       password: new FormControl("", [Validators.required]),
       confirmPassword: new FormControl("", [Validators.required])
-    });
+    },
+      {
+        validator: this.ConfirmedValidator('password', 'confirmPassword'),
+      });
   }
 
   submitForm() {
@@ -55,4 +58,19 @@ export class RegisterComponent {
     this.subscription?.unsubscribe();
   }
 
+  //Reference: https://stackoverflow.com/questions/71765341/confirm-password-validation-in-angular
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+
+      if (matchingControl.errors && !matchingControl.errors['confirmedValidator']) { return; }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
+  }
 }

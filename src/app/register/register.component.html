@@ -36,6 +36,9 @@
         <mat-error *ngIf="form.controls['confirmPassword'].hasError('required')">
             Confirm Password is <strong>required</strong>
         </mat-error>
+        <mat-error *ngIf="form.controls['confirmPassword'].hasError('confirmedValidator')">
+            The confirm password does not <strong>match</strong>
+        </mat-error>
     </mat-form-field>
     <div class="k-form-buttons">
         <button kendoButton type="submit" class="btn btn-primary btn-block mb-4" (click)="submitForm()"
