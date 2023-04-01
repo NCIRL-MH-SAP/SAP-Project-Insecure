@@ -16,22 +16,29 @@ console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 if (process.env.NODE_ENV !== 'production') {
     app.use(cors());
 }
-else if (!process.env.DISABLE_HTTPS) {
-    const helmet = require("helmet")
-    app.use(helmet())
-    app.use(
-        helmet.contentSecurityPolicy({
-            useDefaults: true,
-            directives: {
-                "script-src-attr": ["'unsafe-inline'"]
-            },
-        })
-    );
+else {
+    if (!process.env.DISABLE_OPTIMIZATIONS) {
+        var compression = require('compression')
+        app.use(compression())
+    }
 
-    var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
-    const ignoreHosts = [];
-    const ignoreRoutes = [];
-    app.use(redirectToHTTPS(ignoreHosts, ignoreRoutes));
+    if (!process.env.DISABLE_SECUTIRY) {
+        const helmet = require("helmet")
+        app.use(helmet())
+        app.use(
+            helmet.contentSecurityPolicy({
+                useDefaults: true,
+                directives: {
+                    "script-src-attr": ["'unsafe-inline'"]
+                },
+            })
+        );
+
+        var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
+        const ignoreHosts = [];
+        const ignoreRoutes = [];
+        app.use(redirectToHTTPS(ignoreHosts, ignoreRoutes));
+    }
 }
 
 require('./routes/auth.routes')(app);
