@@ -4,8 +4,6 @@ const app = express();
 const path = require('path');
 require('dotenv').config();
 
-
-
 app.use(express.urlencoded({
     extended: true,
     limit: '50mb',
@@ -22,6 +20,9 @@ else if (!process.env.DISABLE_HTTPS) {
     const sts = require('strict-transport-security');
     const globalSTS = sts.getSTS({ 'max-age': { 'days': 30 } });
     app.use(globalSTS);
+
+    const referrerPolicy = require('referrer-policy')
+    app.use(referrerPolicy({ policy: 'same-origin' }))
 
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
