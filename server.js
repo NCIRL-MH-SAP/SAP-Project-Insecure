@@ -18,8 +18,14 @@ if (process.env.NODE_ENV !== 'production') {
 }
 else if (!process.env.DISABLE_HTTPS) {
     const helmet = require("helmet")
-    app.use(helmet());
-    
+    app.use(
+        helmet.contentSecurityPolicy({
+            directives: {
+                "script-src-attr": ["'self'"]
+            },
+        })
+    );
+
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
     const ignoreRoutes = [];
