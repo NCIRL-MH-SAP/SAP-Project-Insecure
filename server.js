@@ -28,7 +28,15 @@ else if (!process.env.DISABLE_HTTPS) {
     app.use(xFrameOptions())
 
     app.disable('x-powered-by');
-    
+
+    app.use(function (req, res, next) {
+        res.setHeader(
+            'Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'; connect-src 'self'; frame-src 'self"
+        );
+
+        next();
+    });
+
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
     const ignoreRoutes = [];
