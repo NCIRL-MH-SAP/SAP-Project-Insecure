@@ -17,26 +17,9 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(cors());
 }
 else if (!process.env.DISABLE_HTTPS) {
-    const sts = require('strict-transport-security');
-    const globalSTS = sts.getSTS({ 'max-age': { 'days': 30 } });
-    app.use(globalSTS);
-
-    const referrerPolicy = require('referrer-policy')
-    app.use(referrerPolicy({ policy: 'same-origin' }))
-
-    var xFrameOptions = require('x-frame-options')
-    app.use(xFrameOptions())
-
-    app.disable('x-powered-by');
-
-    app.use(function (req, res, next) {
-        res.setHeader(
-            'Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'; connect-src 'self'; frame-src 'self"
-        );
-
-        next();
-    });
-
+    const helmet = require("helmet")
+    app.use(helmet());
+    
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
     const ignoreRoutes = [];
