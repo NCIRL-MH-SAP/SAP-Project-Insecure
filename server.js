@@ -21,7 +21,7 @@ else if (!process.env.DISABLE_HTTPS) {
     app.use(
         helmet.contentSecurityPolicy({
             directives: {
-                "script-src-attr": ["'self'"]
+                "script-src-attr": ["'unsafe-inline'"]
             },
         })
     );
