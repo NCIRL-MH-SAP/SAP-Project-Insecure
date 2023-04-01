@@ -44,7 +44,9 @@ exports.get = (req, res) => {
                 email: u.email,
                 salary: u.salary,
                 bonus: u.bonus,
-                position: u.position
+                position: u.position,
+                active: u.active,
+                isAdmin: u.isAdmin
             }));
 
             res.send(mapped);
