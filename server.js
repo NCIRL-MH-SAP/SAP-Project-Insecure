@@ -4,6 +4,8 @@ const app = express();
 const path = require('path');
 require('dotenv').config();
 
+
+
 app.use(express.urlencoded({
     extended: true,
     limit: '50mb',
@@ -16,7 +18,11 @@ console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 if (process.env.NODE_ENV !== 'production') {
     app.use(cors());
 }
-else if (!process.env.DISABLE_REDIRECT_TO_HTTPS) {
+else if (!process.env.DISABLE_HTTPS) {
+    const sts = require('strict-transport-security');
+    const globalSTS = sts.getSTS({ 'max-age': { 'days': 30 } });
+    app.use(globalSTS);
+
     var redirectToHTTPS = require('express-http-to-https').redirectToHTTPS;
     const ignoreHosts = [];
     const ignoreRoutes = [];
