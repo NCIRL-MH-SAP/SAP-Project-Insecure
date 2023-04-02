@@ -73,7 +73,6 @@ exports.post = (req, res) => {
         position: req.body.position,
         isAdmin: req.body.isAdmin,
         active: req.body.active
-        // password: bcrypt.hashSync(req.body.password, 8)    
     })
         .then(user => {
             res.send({ message: "User was created successfully" });

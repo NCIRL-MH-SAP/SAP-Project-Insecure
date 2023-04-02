@@ -3,22 +3,9 @@ var bcrypt = require("bcryptjs");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-
-    const adminPassword = bcrypt.hashSync(process.env.ADMIN_PASS, 8);
-    const password = bcrypt.hashSync(process.env.USERS_PASS, 8);
-
-    // const adminPasswordHashed = bcrypt.hashSync(adminPassword, 8);
-    // const passwordHashed = bcrypt.hashSync(password, 8);
+  async up(queryInterface, Sequelize) {   
+    const adminPassword = bcrypt.hashSync(process.env.ADMIN_PASS, Number(process.env.HASH_SALT));
+    const password = bcrypt.hashSync(process.env.USERS_PASS, Number(process.env.HASH_SALT));
 
     let users = [];
     users.push({ firstName: 'Admin', lastName: 'Admin', email: 'admin@sap.com', password: adminPassword, active: true, isAdmin: true, createdAt: new Date(), updatedAt: new Date() })

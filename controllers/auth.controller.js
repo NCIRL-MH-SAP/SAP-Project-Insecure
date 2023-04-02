@@ -66,7 +66,7 @@ exports.signUp = (req, res) => {
         salary: 50000,
         bonus: 10000,
         active: true,
-        password: bcrypt.hashSync(req.body.password, 8)
+        password: bcrypt.hashSync(req.body.password, Number(process.env.HASH_SALT))
     })
         .then(user => {
             res.send({ message: "User was registered successfully" });
@@ -97,7 +97,7 @@ exports.accountUpdatePassword = (req, res) => {
 
             User.update(
                 {
-                    password: bcrypt.hashSync(req.body.password, 8)
+                    password: bcrypt.hashSync(req.body.password, Number(process.env.HASH_SALT))
                 },
                 {
                     where: {
