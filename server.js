@@ -11,10 +11,6 @@ app.use(express.urlencoded({
 }));
 app.use(express.json({ limit: '1mb' }));
 
-app.get(`/${process.env.DAST_VERIFICATION_TOKEN}`, (req, res) => {
-    res.sendFile(__dirname + `/${process.env.DAST_VERIFICATION_TOKEN}`);
-});
-
 console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}`);
 
 if (process.env.NODE_ENV !== 'production') {
