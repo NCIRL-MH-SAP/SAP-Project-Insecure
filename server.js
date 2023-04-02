@@ -17,6 +17,12 @@ if (process.env.NODE_ENV !== 'production') {
     app.use(cors());
 }
 else {
+    if (process.env.DAST_VERIFICATION_TOKEN) {
+        app.get(`/${DAST_VERIFICATION_TOKEN}`, (req, res) => {
+            res.sendFile(__dirname + `/${DAST_VERIFICATION_TOKEN}`);
+        });
+    }
+
     if (!process.env.DISABLE_OPTIMIZATIONS) {
         var compression = require('compression')
         app.use(compression())
