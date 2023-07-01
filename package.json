@@ -28,7 +28,7 @@
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
     "@progress/kendo-angular-buttons": "11.4.0",
-    "@progress/kendo-angular-common": "11.4.0",
+    "@progress/kendo-angular-common": "11.6.0",
     "@progress/kendo-angular-dateinputs": "11.4.0",
     "@progress/kendo-angular-dialog": "11.4.0",
     "@progress/kendo-angular-dropdowns": "11.4.0",
