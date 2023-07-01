@@ -47,7 +47,7 @@
     "@progress/kendo-drawing": "^1.17.2",
     "@progress/kendo-licensing": "^1.0.2",
     "@progress/kendo-svg-icons": "^1.0.0",
-    "@progress/kendo-theme-default": "^6.0.2",
+    "@progress/kendo-theme-default": "^6.4.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^5.2.3",
     "compression": "^1.7.4",
